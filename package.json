@@ -8,8 +8,9 @@
   ],
   "scripts": {
     "prepare": "node .husky/install.mjs",
-    "build": "rm -rf dist && npm run build:utils",
+    "build": "rm -rf dist && npm run build:utils && npm run build:plugins",
     "build:utils": "npm run build --workspace=@mfe-kit/utils",
+    "build:plugins": "npm run build --workspace=@mfe-kit/plugins",
     "lint": "eslint packages/**/src",
     "check": "prettier --ignore-path .gitignore --check packages/**/src",
     "check:fix": "prettier --ignore-path .gitignore --write packages/**/src && eslint --fix packages/**/src"

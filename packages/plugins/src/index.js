@@ -7,23 +7,31 @@ import yaml from 'js-yaml';
 import MarkdownIt from 'markdown-it';
 import markdownItAnchor from 'markdown-it-anchor';
 import hljs from 'highlight.js/lib/common';
+import { fileURLToPath } from 'url';
 
-const isDev = process.env.NODE_ENV === 'development';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 export default function playgroundServ(root) {
   const app = new Hono();
   let manifest;
 
-  nunjucks.configure('templates', {
+  nunjucks.configure(path.join(__dirname, 'templates'), {
     autoescape: true,
-    watch: isDev,
+    watch: false,
     noCache: true,
   });
 
-  app.use('/css/*', serveStatic({ root: './templates' }));
-  app.use('/js/*', serveStatic({ root: './templates' }));
-  app.use('/assets/*', serveStatic({ root: './templates' }));
-  app.use('/favicon.png', serveStatic({ path: './templates/favicon.png' }));
+  app.use('/css/*', serveStatic({ root: path.join(__dirname, 'templates') }));
+  app.use('/js/*', serveStatic({ root: path.join(__dirname, 'templates') }));
+  app.use(
+    '/assets/*',
+    serveStatic({ root: path.join(__dirname, 'templates') }),
+  );
+  app.use(
+    '/favicon.png',
+    serveStatic({ path: path.join(__dirname, 'templates/favicon.png') }),
+  );
 
   app.get('/prerender', async (c) => {
     const html = nunjucks.render('./pages/prerender.njk', { manifest });
