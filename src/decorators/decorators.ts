@@ -2,7 +2,7 @@ const observedAttributes: Array<string> = [];
 const watchers = new Map<string, string>();
 
 export function Component(constructor: Function): void {
-  Object.defineProperty(constructor, "observedAttributes", {
+  Object.defineProperty(constructor, 'observedAttributes', {
     get() {
       return observedAttributes;
     },
@@ -16,7 +16,7 @@ export function Component(constructor: Function): void {
   ) {
     this[name] = newVal;
     const method = watchers.get(name);
-    if (method && typeof this[method] === "function") {
+    if (method && typeof this[method] === 'function') {
       this[method](oldVal, newVal);
     }
   };
@@ -25,7 +25,7 @@ export function Component(constructor: Function): void {
 export function Attribute(): PropertyDecorator {
   return function (_: unknown, propertyKey: string | symbol) {
     if (
-      typeof propertyKey === "string" &&
+      typeof propertyKey === 'string' &&
       !observedAttributes.includes(propertyKey)
     ) {
       observedAttributes.push(propertyKey);
@@ -35,7 +35,7 @@ export function Attribute(): PropertyDecorator {
 
 export function Watch(attr: string): MethodDecorator {
   return function (_: unknown, propertyKey: string | symbol) {
-    if (typeof propertyKey === "string") {
+    if (typeof propertyKey === 'string') {
       watchers.set(attr, propertyKey);
     }
   };

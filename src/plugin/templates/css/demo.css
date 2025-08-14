@@ -32,7 +32,7 @@
   box-shadow: none;
 }
 
-.playground-controls .item input[type="checkbox"] {
+.playground-controls .item input[type='checkbox'] {
   height: 20px;
   width: 20px;
 }

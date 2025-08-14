@@ -1,9 +1,9 @@
 (function () {
   const { manifest } = window.PLAYGROUND;
 
-  const CONTENT_ID = "playground-content";
-  const CONTROLS_ID = "playground-controls";
-  const CONTROLS_BTN_ID = "playground-controls-btn";
+  const CONTENT_ID = 'playground-content';
+  const CONTROLS_ID = 'playground-controls';
+  const CONTROLS_BTN_ID = 'playground-controls-btn';
 
   function injectMFE() {
     const component = document.createElement(manifest.tag);
@@ -39,11 +39,11 @@
     elements.push(
       `<div class="item"><button class="apply-btn" id="${CONTROLS_BTN_ID}">Apply</button></div>`,
     );
-    controlsContainerEl.innerHTML = elements.join("");
+    controlsContainerEl.innerHTML = elements.join('');
     // fill controls with values from query/manifest(example)
     setControlsValues();
 
-    document.getElementById(CONTROLS_BTN_ID).addEventListener("click", (e) => {
+    document.getElementById(CONTROLS_BTN_ID).addEventListener('click', (e) => {
       e.stopPropagation();
       e.preventDefault();
       const values = getControlsValues();
@@ -53,12 +53,12 @@
   }
 
   function generateControlItem(control) {
-    let template = "";
+    let template = '';
     // generate html select
     if (!!control.schema.enum) {
       const options = control.schema.enum
         .map((val) => `<option value="${val}">${val}</option>`)
-        .join("");
+        .join('');
 
       template = `
         <select id="${control.name}" required="${control.required}">
@@ -67,7 +67,7 @@
       `;
     } else {
       // generate html inputs
-      const type = control.schema.type === "boolean" ? "checkbox" : "text";
+      const type = control.schema.type === 'boolean' ? 'checkbox' : 'text';
       template = `
         <input id="${control.name}" type="${type}" required="${control.required}"/>
       `;
@@ -90,7 +90,7 @@
     const controls = {};
     manifest.attributes.forEach((attribute) => {
       const el = document.getElementById(attribute.name);
-      controls[attribute.name] = el.type === "checkbox" ? el.checked : el.value;
+      controls[attribute.name] = el.type === 'checkbox' ? el.checked : el.value;
     });
     return controls;
   }
@@ -99,8 +99,8 @@
     const attributes = getAttributesFromQueryParams();
     for (const key in attributes) {
       const el = document.getElementById(key);
-      if (el.type === "checkbox") {
-        el.checked = attributes[key] === "true";
+      if (el.type === 'checkbox') {
+        el.checked = attributes[key] === 'true';
       } else {
         el.value = attributes[key];
       }
@@ -111,7 +111,7 @@
     const queryString = new URLSearchParams(data).toString();
     const url = new URL(window.location.href);
     url.search = queryString;
-    window.history.replaceState({}, "", url);
+    window.history.replaceState({}, '', url);
   }
 
   injectMFE();
