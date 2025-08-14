@@ -25,6 +25,7 @@
     "noUncheckedSideEffectImports": true
   },
   "include": [
-    "src"
+    "packages/utils/src/**/*",
+    "packages/plugins/src/**/*"
   ]
 }
